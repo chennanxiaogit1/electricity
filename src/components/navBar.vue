@@ -23,7 +23,6 @@
 		width: 120rpx;
 	}
 	.navbar .center {
-		/* width: calc(100vw - 2*120rpx); */
         flex: 1;
 	} 
 </style>

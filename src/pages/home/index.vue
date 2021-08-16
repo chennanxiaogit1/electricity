@@ -3,26 +3,28 @@
 		<!-- 顶部导航栏 -->
 		<nav-bar class="navbar"><view slot="center">购物街</view></nav-bar>
 		<!-- 轮播图 -->
-		<home-swiper :banner="banner"></home-swiper>
+		<home-swiper :banner="banner" @ImageLoad="ImageLoad"></home-swiper>
 		<!-- 推荐模块 -->
 		<recommend-view :recommends="recommends"></recommend-view>
 		<feature-view></feature-view>
 		<!-- tabBar导航栏 -->
 		<tab-bar-control
+			class="tabControl"
 			:title="['流行', '新款', '精选']"
 			@itemClick="itemClick"
+			:class="{fixed:isStick}"
 		></tab-bar-control>
 		<!-- 商品展示 -->
 		<good-list :goods="showGoods()"></good-list>
 		<!-- 回到顶部 -->
-		<back-top></back-top>
+		<back-top v-if="isShow" @backTop="BackTop"></back-top>
 	</view>
 </template>
 
 <script>
 	import NavBar from "@/components/navBar.vue";
 	import GoodList from "@/components/GoodList";
-import BackTop from "@/components/BackTop";
+	import BackTop from "@/components/BackTop";
 
 	import HomeSwiper from "@/pages/home/chidrenComponents/HomeSwiper";
 	import RecommendView from "@/pages/home/chidrenComponents/RecommendView";
@@ -45,7 +47,9 @@ import BackTop from "@/components/BackTop";
 				},
 				type: "pop",
 				// 回到顶部的图标是否显示
-				isShow:false 
+				isShow: false,
+				tabOffsetTop: 0,
+				isStick: false
 			};
 		},
 		components: {
@@ -94,13 +98,42 @@ import BackTop from "@/components/BackTop";
 						this.type = "sell";
 						break;
 				}
+			},
+			BackTop() {
+				wx.pageScrollTo({
+					scrollTop: 0,
+					duration: 300
+				});
+			},
+			// 图片加载完成
+			ImageLoad() {
+				// console.log(this.$refs.tabControl);
+				const query = uni.createSelectorQuery().in(this);
+				query
+					.select(".tabControl")
+					.boundingClientRect(data => {
+						// console.log("节点离页面顶部的距离为" + data.top);
+						this.tabOffsetTop = data.top;
+					})
+					.exec(() => {
+						// console.log(this.tabOffsetTop);
+					});
 			}
 		},
 		onReachBottom() {
 			this.getHomeGoods(this.type);
 		},
 		onPageScroll(scrollTop) {
-			// if()
+			if (scrollTop.scrollTop > 1000) {
+				this.isShow = true;
+			} else {
+				this.isShow = false;
+			}
+			if (scrollTop.scrollTop > this.tabOffsetTop) {
+				this.isStick = true;
+			} else {
+				this.isStick = false;
+			}
 		}
 	};
 </script>
@@ -117,6 +150,11 @@ import BackTop from "@/components/BackTop";
 		left: 0;
 		right: 0;
 		top: 0;
-		z-index: 999;
+		z-index: 2;
+	}
+	.fixed {
+		position: fixed;
+		top: 88rpx;
+		z-index: 3;
 	}
 </style>

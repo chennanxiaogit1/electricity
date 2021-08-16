@@ -1,12 +1,13 @@
 <template>
-	<view class="good-item">
+	<navigator class="good-item" :url="`/pages/detail/index?iid=${goodItem.iid}`">
+
 		<image :src="ShowImg()"></image>
 		<view class="good-info">
 			<p>{{ goodItem.title }}</p>
 			<text class="price">{{ goodItem.price }}</text>
 			<text class="iconfont icon-shoucang collect">{{ goodItem.cfav }}</text>
 		</view>
-	</view>
+	</navigator>
 </template>
 
 <script>

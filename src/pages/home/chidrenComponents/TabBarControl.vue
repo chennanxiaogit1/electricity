@@ -3,10 +3,9 @@
 		<view
 			class="control-item"
 			v-for="(item, index) in title"
-			:class="{ active: currentIndex == index }"
-            @click="itemClick(index)"
+			@click="itemClick(index)"
 		>
-			<text>{{ item }}</text>
+			<text :class="{ active: currentIndex == index }">{{ item }}</text>
 		</view>
 	</view>
 </template>
@@ -23,13 +22,13 @@
 				currentIndex: 0
 			};
 		},
-        emits:["itemClick"],
-        methods:{
-            itemClick(index) {
-                this.currentIndex = index;
-                this.$emit("itemClick",index)
-            }
-        }
+		emits: ["itemClick"],
+		methods: {
+			itemClick(index) {
+				this.currentIndex = index;
+				this.$emit("itemClick", index);
+			}
+		}
 	};
 </script>
 
@@ -41,6 +40,7 @@
 		line-height: 80rpx;
 		text-align: center;
 		background-color: #fff;
+		width: 100vw;
 	}
 	.control-item {
 		flex: 1;
@@ -50,6 +50,6 @@
 	}
 	.active {
 		color: #fe909d;
-		border-bottom: 1rpx solid #fe909d;
+		border-bottom: 8rpx solid #fe909d;
 	}
 </style>

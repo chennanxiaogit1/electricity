@@ -1,11 +1,22 @@
 <template>
-	<view class="back-top">
-		<image src="@/staic/image/common/top.png"></image>
+	<view class="back-top" @click="backTop">
+		<view class="iconfont icon-huidaodingbu"></view>
 	</view>
 </template>
 
 <script>
-	export default {};
+	export default {
+		emits: ["backTop"],
+		methods: {
+			backTop() {
+				this.$emit("backTop");
+			}
+		},
+		created() {
+			this.src = ".././staic/image/tabbar/home.png";
+			// console.log(this.src);
+		}
+	};
 </script>
 
 <style scoped>
@@ -13,10 +24,9 @@
 		position: fixed;
 		right: 16rpx;
 		bottom: 10rpx;
-        z-index: 999;
+		z-index: 3;
 	}
-	.back-top image {
-		width: 43rpx;
-        height: 43rpx;
+	.back-top .iconfont {
+		font-size: 60rpx;
 	}
 </style>
