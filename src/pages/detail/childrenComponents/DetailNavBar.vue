@@ -27,6 +27,7 @@
 				currentIndex: 0
 			};
 		},
+		emits:["titleClick"],
 		methods: {
 			Back() {
 				wx.navigateBack({
@@ -35,6 +36,7 @@
 			},
 			itemClick(index) {
 				this.currentIndex = index;
+				this.$emit("titleClick",index)
 			}
 		}
 	};
@@ -48,9 +50,9 @@
 		background-color: #fff;
 	}
 	.title {
-		display: flex!important;;
+		display: flex !important;
 		text-align: center;
-        width: calc(100vw - 240rpx);
+		width: calc(100vw - 240rpx);
 	}
 	.title-item {
 		flex: 1;

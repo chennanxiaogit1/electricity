@@ -1,12 +1,6 @@
 {
 	"pages": [
 		{
-			"path": "pages/detail/index",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
-		},
-		{
 			"path": "pages/home/index",
 			"style": {
 				"navigationBarTitleText": "首页"
@@ -19,12 +13,17 @@
 			}
 		},
 		{
+			"path": "pages/detail/index",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
 			"path": "pages/category/index",
 			"style": {
 				"navigationBarTitleText": "分类"
 			}
 		},
-		
 		{
 			"path": "pages/profile/index",
 			"style": {
@@ -50,7 +49,7 @@
 				"text": "首页",
 				"iconPath": "./static/image/tabbar/home.png",
 				"selectedIconPath": "./static/image/tabbar/home_active.png"
-			},	
+			},
 			{
 				"pagePath": "pages/category/index",
 				"text": "分类",
@@ -71,6 +70,4 @@
 			}
 		]
 	}
-	
-	  
 }
