@@ -22,7 +22,14 @@
 </template>
 
 <script>
-	export default {};
+	export default {
+		emits: ["addCart"],
+		methods: {
+			addToCart() {
+				this.$emit("addCart");
+			}
+		}
+	};
 </script>
 
 <style scoped>
@@ -31,7 +38,7 @@
 		position: fixed;
 		background-color: #fff;
 		width: 100vw;
-        bottom: 0;
+		bottom: 0;
 		display: flex;
 		text-align: center;
 	}
@@ -42,9 +49,9 @@
 
 	.bar-item > view {
 		flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.bar-left .text {

@@ -29,7 +29,7 @@
 		<!-- 回到顶部 -->
 		<back-top class="back-top" v-if="isShow" @backTop="backTop"></back-top>
 		<!-- 底部导航栏 -->
-		<detail-bottom-bar></detail-bottom-bar>
+		<detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
 	</view>
 </template>
 
@@ -165,6 +165,25 @@
 						this.themeTopYs.push(data.top);
 					})
 					.exec(() => {});
+			},
+			// 加入购物车
+			addToCart() {
+				// 1.创建对象
+				let obj = {};
+				// 2.对象的信息
+				obj.iid = this.iid;
+				obj.imgURL = this.topImages[0];
+				obj.title = this.goods.title;
+				obj.desc = this.goods.desc;
+				obj.newPrice = this.goods.nowPrice;
+				// 3.添加到购物车中
+				this.$store.dispatch("addCart",obj).then(res=> {
+					wx.showToast({
+						title: res,
+						icon: 'none',	
+					});
+					  
+				});
 			}
 		},
 		onReady() {}

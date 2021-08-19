@@ -1,48 +1,44 @@
 <template>
-	<view class="content">
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
+	<view class="cart">
+		<!-- 1.导航栏 -->
+		<nav-bar class="bar">
+			<view slot="center">购物车({{ cartLength }}) </view></nav-bar
+		>
+		<!-- 2.商品列表 -->
+		<good-list></good-list>
+		<!-- 3.底部导航栏 -->
+		<bottom-bar></bottom-bar>
 	</view>
 </template>
 
 <script>
+	import NavBar from "@/components/navBar.vue";
+	import GoodList from "@/pages/cart/childrenComponent/GoodList";
+	import BottomBar from "@/pages/cart/childrenComponent/BottomBar";
+
+	import { mapGetters } from "vuex";
 	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
+		components: {
+			NavBar,
+			GoodList,
+			BottomBar
 		},
-		onLoad() {
-
+		computed: {
+			// 将get属性转化为计算属性
+			...mapGetters(["cartLength"])
 		},
-		methods: {
-
-		}
-	}
+		methods: {}
+	};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+<style scoped>
+	.cart {
+		height: 100vh;
 	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	.bar {
+		background-color: red;
+		/* color: #fff; */
+		font-size: 30rpx;
+		font-weight: 700;
 	}
 </style>
