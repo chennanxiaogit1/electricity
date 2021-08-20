@@ -90,7 +90,6 @@
 			DetailBottomBar
 		},
 		async onLoad(options) {
-			console.log(options);
 			this.iid = options.iid;
 			const res = await getDetail(this.iid);
 			// 1.获取轮播图数据

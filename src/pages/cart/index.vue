@@ -1,9 +1,11 @@
 <template>
 	<view class="cart">
 		<!-- 1.导航栏 -->
-		<nav-bar class="bar">
-			<view slot="center">购物车({{ cartLength }}) </view></nav-bar
-		>
+		<view class="nav-bar">
+			<nav-bar class="bar">
+				<view slot="center">购物车({{ cartLength }}) </view></nav-bar
+			>
+		</view>
 		<!-- 2.商品列表 -->
 		<good-list></good-list>
 		<!-- 3.底部导航栏 -->
@@ -35,9 +37,15 @@
 	.cart {
 		height: 100vh;
 	}
+	.nav-bar {
+		position: relative;
+		height: 88rpx;
+	}
 	.bar {
-		background-color: red;
-		/* color: #fff; */
+		width: 100vw;
+		background-color: #f69;
+		position: absolute;
+		color: #fff;
 		font-size: 30rpx;
 		font-weight: 700;
 	}

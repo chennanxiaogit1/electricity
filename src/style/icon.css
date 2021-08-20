@@ -1,9 +1,9 @@
 @font-face {
     font-family: "iconfont";
     /* Project id 2737059 */
-    src: url('//at.alicdn.com/t/font_2737059_q1ddwq9tqvf.woff2?t=1629195089692') format('woff2'),
-        url('//at.alicdn.com/t/font_2737059_q1ddwq9tqvf.woff?t=1629195089692') format('woff'),
-        url('//at.alicdn.com/t/font_2737059_q1ddwq9tqvf.ttf?t=1629195089692') format('truetype');
+    src: url('//at.alicdn.com/t/font_2737059_ddy9przejc5.woff2?t=1629442821091') format('woff2'),
+        url('//at.alicdn.com/t/font_2737059_ddy9przejc5.woff?t=1629442821091') format('woff'),
+        url('//at.alicdn.com/t/font_2737059_ddy9przejc5.ttf?t=1629442821091') format('truetype');
 }
 
 .iconfont {
@@ -12,6 +12,30 @@
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wodexiaoxi:before {
+    content: "\e642";
+}
+
+.icon-xiazai:before {
+    content: "\f02a";
+}
+
+.icon-jifenshangcheng:before {
+    content: "\e6dd";
+}
+
+.icon-huiyuanka:before {
+    content: "\f5df";
+}
+
+.icon-tubiaolunkuo-:before {
+    content: "\e60d";
+}
+
+.icon-weidenglu-touxiang:before {
+    content: "\e60c";
 }
 
 .icon-kefu:before {
