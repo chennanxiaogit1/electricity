@@ -6,8 +6,10 @@
 				<view slot="center">购物车({{ cartLength }}) </view></nav-bar
 			>
 		</view>
-		<!-- 2.商品列表 -->
-		<good-list></good-list>
+		<scroll-view scroll-y class="scroll">
+			<!-- 2.商品列表 -->
+			<good-list></good-list>
+		</scroll-view>
 		<!-- 3.底部导航栏 -->
 		<bottom-bar></bottom-bar>
 	</view>
@@ -48,5 +50,8 @@
 		color: #fff;
 		font-size: 30rpx;
 		font-weight: 700;
+	}
+	.scroll {
+		height: calc(100vh - 88rpx - 88rpx);
 	}
 </style>
