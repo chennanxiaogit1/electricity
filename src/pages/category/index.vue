@@ -145,7 +145,7 @@
 		flex: 1;
 	}
 	.content .right {
-		/*  */
+		/* 防止子元素宽度超出父元素 */
 		min-width: 0;
 		flex: 2;
 	}
