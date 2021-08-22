@@ -65,9 +65,6 @@
 			},
 			showCategoryDetail() {
 				if (this.currentIndex === -1) return [];
-				console.log(
-					this.categoryData[this.currentIndex].categoryDetail[this.type]
-				);
 				return this.categoryData[this.currentIndex].categoryDetail[this.type];
 			}
 		},

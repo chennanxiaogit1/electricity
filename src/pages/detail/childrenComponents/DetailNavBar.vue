@@ -27,7 +27,7 @@
 				currentIndex: 0
 			};
 		},
-		emits:["titleClick"],
+		emits: ["titleClick"],
 		methods: {
 			Back() {
 				wx.navigateBack({
@@ -36,7 +36,7 @@
 			},
 			itemClick(index) {
 				this.currentIndex = index;
-				this.$emit("titleClick",index)
+				this.$emit("titleClick", index);
 			}
 		}
 	};
@@ -44,9 +44,6 @@
 
 <style scoped>
 	.detail {
-		position: fixed;
-		top: 0;
-		z-index: 2;
 		background-color: #fff;
 	}
 	.title {

@@ -1,30 +1,41 @@
 <template>
-	<view class="content">
+	<view>
 		<!-- 顶部导航栏 -->
 		<nav-bar class="navbar"><view slot="center">购物街</view></nav-bar>
-		<!-- 轮播图 -->
-		<home-swiper :banner="banner" @ImageLoad="ImageLoad"></home-swiper>
-		<!-- 推荐模块 -->
-		<recommend-view :recommends="recommends"></recommend-view>
-		<feature-view></feature-view>
-		<!-- tabBar导航栏 -->
 		<tab-bar-control
-			class="tabControl"
 			:title="['流行', '新款', '精选']"
 			@itemClick="tabClick"
-			:class="{fixed:isStick}"
+			ref="tabcontrol1"
+			class="fix"
+			v-show="isStick"
 		></tab-bar-control>
-		<!-- 商品展示 -->
-		<good-list :goods="showGoods()"></good-list>
-		<!-- 回到顶部 -->
-		<back-top v-if="isShow" @backTop="BackTop"></back-top>
+		<scroll-view
+			scroll-y
+			@scroll="scroll"
+			@scrolltolower="ToMore"
+			class="content"
+		>
+			<!-- 轮播图 -->
+			<home-swiper :banner="banner" @ImageLoad="ImageLoad"></home-swiper>
+			<!-- 推荐模块 -->
+			<recommend-view :recommends="recommends"></recommend-view>
+			<feature-view></feature-view>
+			<!-- tabBar导航栏 -->
+			<tab-bar-control
+				class="tabControl"
+				:title="['流行', '新款', '精选']"
+				@itemClick="tabClick"
+				ref="tabcontrol2"
+			></tab-bar-control>
+			<!-- 商品展示 -->
+			<good-list :goods="showGoods()"></good-list>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
 	import NavBar from "@/components/navBar.vue";
 	import GoodList from "@/components/GoodList";
-	import BackTop from "@/components/BackTop";
 
 	import HomeSwiper from "@/pages/home/chidrenComponents/HomeSwiper";
 	import RecommendView from "@/pages/home/chidrenComponents/RecommendView";
@@ -46,16 +57,13 @@
 					sell: { page: 0, list: [] }
 				},
 				type: "pop",
-				// 回到顶部的图标是否显示
-				isShow: false,
 				tabOffsetTop: 0,
-				isStick: false
+				isStick: false,
 			};
 		},
 		components: {
 			NavBar,
 			GoodList,
-			BackTop,
 
 			HomeSwiper,
 			RecommendView,
@@ -98,12 +106,15 @@
 						this.type = "sell";
 						break;
 				}
+				this.$refs.tabcontrol1.currentIndex = index;
+				this.$refs.tabcontrol2.currentIndex = index;
 			},
-			BackTop() {
-				wx.pageScrollTo({
-					scrollTop: 0,
-					duration: 300
-				});
+			scroll(e) {
+				if (e.detail.scrollTop > this.tabOffsetTop) {
+					this.isStick = true;
+				} else {
+					this.isStick = false;
+				}
 			},
 			// 图片加载完成
 			ImageLoad() {
@@ -118,44 +129,24 @@
 					.exec(() => {
 						// console.log(this.tabOffsetTop);
 					});
-			}
-		},
-		onReachBottom() {
-			this.getHomeGoods(this.type);
-		},
-		onPageScroll(scrollTop) {
-			if (scrollTop.scrollTop > 1000) {
-				this.isShow = true;
-			} else {
-				this.isShow = false;
-			}
-			if (scrollTop.scrollTop > this.tabOffsetTop) {
-				this.isStick = true;
-			} else {
-				this.isStick = false;
+			},
+			ToMore() {
+				this.getHomeGoods(this.type);
 			}
 		}
 	};
 </script>
 
 <style>
-	.content {
-		padding-top: 88rpx;
-	}
 	.navbar {
 		background-color: #fe909d;
 		font-size: 36rpx;
 		color: #fff;
-		position: fixed;
-		left: 0;
-		right: 0;
-		top: 0;
-		z-index: 2;
+	}
+	.content {
+		height: calc(100vh - 88rpx);
 	}
 	.fixed {
-		position: fixed;
-		top: 88rpx;
-		z-index: 3;
-		width: 100vw;
+		position: relative;
 	}
 </style>

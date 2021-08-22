@@ -35,10 +35,8 @@
 <style scoped>
 	.bottom-bar {
 		height: 98rpx;
-		position: fixed;
 		background-color: #fff;
 		width: 100vw;
-		bottom: 0;
 		display: flex;
 		text-align: center;
 	}

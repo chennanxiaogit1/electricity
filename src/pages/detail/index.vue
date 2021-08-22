@@ -3,31 +3,31 @@
 		<!-- 首部导航栏 -->
 		<detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
 
-		<!-- 轮播图 -->
-		<detail-swiper :topImages="topImages"></detail-swiper>
-		<!-- 商品基本信息 -->
-		<detail-base-info :goods="goods"></detail-base-info>
-		<!-- 店铺的基本信息 -->
-		<detail-shop-info :shop="shop"></detail-shop-info>
-		<!-- 商品的详情信息 -->
-		<detail-goods-info
-			@imageLoads="imageLoad"
-			:detailInfo="detailInfo"
-		></detail-goods-info>
-		<!-- 商品参数 -->
-		<detail-param-info
-			:paramInfo="paramInfo"
-			class="params"
-		></detail-param-info>
-		<!-- 商品评价 -->
-		<detail-comment-info
-			:commentInfo="commentInfo"
-			class="comment"
-		></detail-comment-info>
-		<!-- 商品推荐 -->
-		<good-list :goods="recommendInfo" class="recommend"></good-list>
-		<!-- 回到顶部 -->
-		<back-top class="back-top" v-if="isShow" @backTop="backTop"></back-top>
+		<scroll-view scroll-y @scrolltolower="ToMore" class="scroll" :scroll-top="scrollTop">
+			<!-- 轮播图 -->
+			<detail-swiper :topImages="topImages"></detail-swiper>
+			<!-- 商品基本信息 -->
+			<detail-base-info :goods="goods"></detail-base-info>
+			<!-- 店铺的基本信息 -->
+			<detail-shop-info :shop="shop"></detail-shop-info>
+			<!-- 商品的详情信息 -->
+			<detail-goods-info
+				@imageLoads="imageLoad"
+				:detailInfo="detailInfo"
+			></detail-goods-info>
+			<!-- 商品参数 -->
+			<detail-param-info
+				:paramInfo="paramInfo"
+				class="params"
+			></detail-param-info>
+			<!-- 商品评价 -->
+			<detail-comment-info
+				:commentInfo="commentInfo"
+				class="comment"
+			></detail-comment-info>
+			<!-- 商品推荐 -->
+			<good-list :goods="recommendInfo" class="recommend"></good-list>
+		</scroll-view>
 		<!-- 底部导航栏 -->
 		<detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
 	</view>
@@ -35,7 +35,6 @@
 
 <script>
 	import GoodList from "@/components/GoodList";
-	import BackTop from "@/components/DetailBackTop";
 
 	import DetailNavBar from "@/pages/detail/childrenComponents/DetailNavBar";
 	import DetailSwiper from "@/pages/detail/childrenComponents/DetailSwiper";
@@ -72,13 +71,12 @@
 				commentInfo: {},
 				// 商品推荐
 				recommendInfo: [],
-				isShow: false,
-				themeTopYs: []
+				themeTopYs: [],
+				scrollTop:0
 			};
 		},
 		components: {
 			GoodList,
-			BackTop,
 
 			DetailNavBar,
 			DetailSwiper,
@@ -117,29 +115,9 @@
 			const res1 = await getRecommend();
 			this.recommendInfo = [...this.recommendInfo, ...res1.data.list];
 		},
-		async onReachBottom() {
-			const res = await getRecommend();
-			this.recommendInfo = [...this.recommendInfo, ...res.data.list];
-		},
-		onPageScroll({ scrollTop }) {
-			if (scrollTop > 1000) {
-				this.isShow = true;
-			} else {
-				this.isShow = false;
-			}
-		},
 		methods: {
-			backTop() {
-				wx.pageScrollTo({
-					scrollTop: 0,
-					duration: 300
-				});
-			},
 			titleClick(index) {
-				wx.pageScrollTo({
-					scrollTop: this.themeTopYs[index],
-					duration: 300
-				});
+			this.scrollTop = this.themeTopYs[index];
 			},
 			imageLoad() {
 				this.themeTopYs.push(0);
@@ -165,6 +143,10 @@
 					})
 					.exec(() => {});
 			},
+			async ToMore() {
+				const res = await getRecommend();
+				this.recommendInfo = [...this.recommendInfo, ...res.data.list];
+			},
 			// 加入购物车
 			addToCart() {
 				// 1.创建对象
@@ -176,25 +158,19 @@
 				obj.desc = this.goods.desc;
 				obj.newPrice = this.goods.nowPrice;
 				// 3.添加到购物车中
-				this.$store.dispatch("addCart",obj).then(res=> {
+				this.$store.dispatch("addCart", obj).then(res => {
 					wx.showToast({
 						title: res,
-						icon: 'none',	
+						icon: "none"
 					});
-					  
 				});
 			}
-		},
-		onReady() {}
+		}
 	};
 </script>
 
 <style scoped>
-	.detail {
-		padding-top: 88rpx;
-		padding-bottom: 98rpx;
-	}
-	.back-top {
-		position: absolute;
+	.scroll {
+		height: calc(100vh - 88rpx - 98rpx);
 	}
 </style>
