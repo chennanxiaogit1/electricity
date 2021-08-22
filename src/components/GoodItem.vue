@@ -1,9 +1,8 @@
 <template>
-	<navigator class="good-item" :url="`/pages/detail/index?iid=${goodItem.iid}`">
-
+	<navigator class="good-item" :url="`/pages/detail/index?iid=${getId}`">
 		<image :src="ShowImg()"></image>
 		<view class="good-info">
-			<p>{{ goodItem.title }}</p>
+			<view>{{ goodItem.title }}</view>
 			<text class="price">{{ goodItem.price }}</text>
 			<text class="iconfont icon-shoucang collect">{{ goodItem.cfav }}</text>
 		</view>
@@ -19,7 +18,12 @@
 		},
 		methods: {
 			ShowImg() {
-				return this.goodItem.image || this.goodItem.show.img;
+				return this.goodItem.img || this.goodItem.image || this.goodItem.show.img;
+			}
+		},
+		computed: {
+			getId() {
+				return this.goodItem.iid || this.goodItem.item_id;
 			}
 		}
 	};
@@ -27,7 +31,7 @@
 
 <style scoped>
 	.good-item {
-		width: 49vw;
+		width: 98%;
 	}
 	.good-item image {
 		width: 100%;
@@ -37,7 +41,7 @@
 		font-size: 24rpx;
 		text-align: center;
 	}
-	.good-info p {
+	.good-info view {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -47,7 +51,7 @@
 		color: #fe909d;
 		margin-right: 20rpx;
 	}
-    .good-info .collect {
-        font-size: 28rpx;
-    }
+	.good-info .collect {
+		font-size: 28rpx;
+	}
 </style>

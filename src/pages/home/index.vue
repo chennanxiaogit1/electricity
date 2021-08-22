@@ -11,7 +11,7 @@
 		<tab-bar-control
 			class="tabControl"
 			:title="['流行', '新款', '精选']"
-			@itemClick="itemClick"
+			@itemClick="tabClick"
 			:class="{fixed:isStick}"
 		></tab-bar-control>
 		<!-- 商品展示 -->
@@ -29,7 +29,7 @@
 	import HomeSwiper from "@/pages/home/chidrenComponents/HomeSwiper";
 	import RecommendView from "@/pages/home/chidrenComponents/RecommendView";
 	import FeatureView from "@/pages/home/chidrenComponents/FeatureView";
-	import TabBarControl from "@/pages/home/chidrenComponents/TabBarControl";
+	import TabBarControl from "@/components/TabBarControl";
 
 	import { request } from "@/network/request.js";
 	export default {
@@ -86,7 +86,7 @@
 			showGoods() {
 				return this.goods[this.type].list;
 			},
-			itemClick(index) {
+			tabClick(index) {
 				switch (index) {
 					case 0:
 						this.type = "pop";
@@ -156,5 +156,6 @@
 		position: fixed;
 		top: 88rpx;
 		z-index: 3;
+		width: 100vw;
 	}
 </style>

@@ -48,7 +48,7 @@
 					{ icon: ".icon-huiyuanka", iconColor: "#ffc636", info: "会员卡" }
 				],
 				serviceList: [
-					{ icon: "icon-dagou", iconColor: "#ff8198", info: "我的购物车" },
+					{ icon: "icon-tubiaolunkuo-", iconColor: "#ff8198", info: "我的购物车" },
 					{ icon: "icon-xiazai", iconColor: "#ff8198", info: "下载购物APP" }
 				]
 			};

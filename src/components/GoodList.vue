@@ -1,6 +1,6 @@
 <template>
 	<view class="goods_list">
-        <good-item v-for="item in goods" :goodItem="item">
+        <good-item class="good-item" v-for="item in goods" :goodItem="item">
         </good-item>
     </view>
 </template>
@@ -21,10 +21,13 @@ import GoodItem from '@/components/GoodItem'
 
 <style scoped>
 .goods_list {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 0 4rpx;
     flex-wrap: wrap;
+}
+.good-item {
+    width: 50%;
 }
 </style>

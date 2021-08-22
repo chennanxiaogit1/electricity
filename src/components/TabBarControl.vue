@@ -40,7 +40,6 @@
 		line-height: 80rpx;
 		text-align: center;
 		background-color: #fff;
-		width: 100vw;
 	}
 	.control-item {
 		flex: 1;
