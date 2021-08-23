@@ -1,6 +1,6 @@
 <template>
 	<navigator class="good-item" :url="`/pages/detail/index?iid=${getId}`">
-		<image :src="ShowImg()"></image>
+		<image :src="ShowImg()" mode="widthFix"></image>
 		<view class="good-info">
 			<view>{{ goodItem.title }}</view>
 			<text class="price">{{ goodItem.price }}</text>

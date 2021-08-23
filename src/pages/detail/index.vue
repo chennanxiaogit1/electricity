@@ -2,8 +2,12 @@
 	<view class="detail">
 		<!-- 首部导航栏 -->
 		<detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
-
-		<scroll-view scroll-y @scrolltolower="ToMore" class="scroll" :scroll-top="scrollTop">
+		<scroll-view
+			scroll-y
+			@scrolltolower="ToMore"
+			class="scroll"
+			:scroll-top="scrollTop"
+		>
 			<!-- 轮播图 -->
 			<detail-swiper :topImages="topImages"></detail-swiper>
 			<!-- 商品基本信息 -->
@@ -72,7 +76,7 @@
 				// 商品推荐
 				recommendInfo: [],
 				themeTopYs: [],
-				scrollTop:0
+				scrollTop: 0
 			};
 		},
 		components: {
@@ -87,37 +91,55 @@
 			DetailCommentInfo,
 			DetailBottomBar
 		},
-		async onLoad(options) {
+		onLoad(options) {
 			this.iid = options.iid;
-			const res = await getDetail(this.iid);
-			// 1.获取轮播图数据
-			this.topImages = res.result.itemInfo.topImages;
-			// 2.获取商品的基本信息
-			this.goods = new Good(
-				res.result.itemInfo,
-				res.result.columns,
-				res.result.shopInfo.services
-			);
-			// 3.获取店铺信息
-			this.shop = new Shop(res.result.shopInfo);
-			// 4.获取商品的详情信息
-			this.detailInfo = res.result.detailInfo;
-			// 5.获取商品的参数信息
-			this.paramInfo = new GoodsParam(
-				res.result.itemParams.info,
-				res.result.itemParams.rule
-			);
-			// 6.获取用户的评价
-			if (res.result.rate.cRate !== 0) {
-				this.commentInfo = res.result.rate.list[0];
-			}
+			getDetail(this.iid)
+				.then(res => {
+					// 1.获取轮播图数据
+					this.topImages = res.result.itemInfo.topImages;
+					// 2.获取商品的基本信息
+					this.goods = new Good(
+						res.result.itemInfo,
+						res.result.columns,
+						res.result.shopInfo.services
+					);
+					// 3.获取店铺信息
+					this.shop = new Shop(res.result.shopInfo);
+					// 4.获取商品的详情信息
+					this.detailInfo = res.result.detailInfo;
+					// 5.获取商品的参数信息
+					this.paramInfo = new GoodsParam(
+						res.result.itemParams.info,
+						res.result.itemParams.rule
+					);
+					// 6.获取用户的评价
+					if (res.result.rate.cRate !== 0) {
+						this.commentInfo = res.result.rate.list[0];
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+
 			// 7.获取推荐商品数据
-			const res1 = await getRecommend();
-			this.recommendInfo = [...this.recommendInfo, ...res1.data.list];
+			getRecommend()
+				.then(res => {
+					this.recommendInfo = [...this.recommendInfo, ...res.data.list];
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		},
+		onShareAppMessage() {
+			return {
+				title: this.goods.title, // 分享后的信息显示标题 | 默认是当前小程序名称
+				path: `/pages/detail/index?iid=${this.iid}`, // 用户点击分享后的信息时，进入的小程序页面路径：绝对路径 | 默认是当前页面
+				imageUrl: '' // 分享的信息中显示的图片，可以是程序内的图片，也可以是网络图片 | 默认是当前页面的前半部分
+			};
 		},
 		methods: {
 			titleClick(index) {
-			this.scrollTop = this.themeTopYs[index];
+				this.scrollTop = this.themeTopYs[index];
 			},
 			imageLoad() {
 				this.themeTopYs.push(0);
@@ -144,8 +166,12 @@
 					.exec(() => {});
 			},
 			async ToMore() {
-				const res = await getRecommend();
-				this.recommendInfo = [...this.recommendInfo, ...res.data.list];
+				try {
+					const res = await getRecommend();
+					this.recommendInfo = [...this.recommendInfo, ...res.data.list];
+				} catch (error) {
+					console.log(error);
+				}
 			},
 			// 加入购物车
 			addToCart() {

@@ -69,44 +69,50 @@
 			}
 		},
 		methods: {
-			async _getCategory() {
-				const res = await getCategory();
-				// 1.获取分类数据
-				this.category = res.data.category.list;
-				// 2.初始化每个类别的子数据
-				for (let i = 0; i < this.category.length; i++) {
-					this.categoryData[i] = {
-						// 包含每个子类的总子类
-						subcategories: {},
-						categoryDetail: {
-							pop: [],
-							new: [],
-							sell: []
+			_getCategory() {
+				getCategory()
+					.then(res => {
+						// 1.获取分类数据
+						this.category = res.data.category.list;
+						// 2.初始化每个类别的子数据
+						for (let i = 0; i < this.category.length; i++) {
+							this.categoryData[i] = {
+								// 包含每个子类的总子类
+								subcategories: {},
+								categoryDetail: {
+									pop: [],
+									new: [],
+									sell: []
+								}
+							};
 						}
-					};
-				}
-
-				// 请求第一个分类的数据
-				this._getSubcategories(0);
+						// 请求第一个分类的数据
+						this._getSubcategories(0);
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			},
-			async _getSubcategories(index) {
+			_getSubcategories(index) {
 				this.currentIndex = index;
 				let maitKey = this.category[index].maitKey;
-				const res = await getSubcategory(maitKey);
-				this.categoryData[index].subcategories = res.data;
-				console.log(res);
-				// 将categoryData数组 转换为 对象
-				this.categoryData = { ...this.categoryData };
-				this._getCategoryDetail("pop");
-				this._getCategoryDetail("new");
-				this._getCategoryDetail("sell");
+
+				getSubcategory(maitKey).then(res => {
+					this.categoryData[index].subcategories = res.data;
+					// 将categoryData数组 转换为 对象
+					this.categoryData = { ...this.categoryData };
+					this._getCategoryDetail("pop");
+					this._getCategoryDetail("new");
+					this._getCategoryDetail("sell");
+				});
 			},
-			async _getCategoryDetail(type) {
+			_getCategoryDetail(type) {
 				// 1.获取请求的minWallkey
 				let minWallkey = this.category[this.currentIndex].miniWallkey;
-				const res = await getCategoryDetail(minWallkey, type);
-				this.categoryData[this.currentIndex].categoryDetail[type] = res;
-				this.categoryData = { ...this.categoryData };
+				getCategoryDetail(minWallkey, type).then(res => {
+					this.categoryData[this.currentIndex].categoryDetail[type] = res;
+					this.categoryData = { ...this.categoryData };
+				});
 			},
 			/**
 			 *事情响应的方法

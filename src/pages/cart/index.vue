@@ -1,6 +1,7 @@
 <template>
 	<view class="cart">
-		<!-- 1.导航栏 -->
+		<view class="hasShop" v-if="cartLength>0">
+			<!-- 1.导航栏 -->
 		<view class="nav-bar">
 			<nav-bar class="bar">
 				<view slot="center">购物车({{ cartLength }}) </view></nav-bar
@@ -12,6 +13,10 @@
 		</scroll-view>
 		<!-- 3.底部导航栏 -->
 		<bottom-bar></bottom-bar>
+		</view>
+		<view class="blank" v-else>
+			<blank-shop></blank-shop>
+		</view>
 	</view>
 </template>
 
@@ -19,13 +24,15 @@
 	import NavBar from "@/components/navBar.vue";
 	import GoodList from "@/pages/cart/childrenComponent/GoodList";
 	import BottomBar from "@/pages/cart/childrenComponent/BottomBar";
+	import BlankShop from "@/pages/cart/childrenComponent/BlankShop"
 
 	import { mapGetters } from "vuex";
 	export default {
 		components: {
 			NavBar,
 			GoodList,
-			BottomBar
+			BottomBar,
+			BlankShop
 		},
 		computed: {
 			// 将get属性转化为计算属性

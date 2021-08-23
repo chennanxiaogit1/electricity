@@ -11,6 +11,11 @@
 					>{{ item }}</view
 				>
 			</view>
+			<view
+				class="share iconfont icon-zhuanfa"
+				slot="right"
+				@click="share"
+			></view>
 		</nav-bar>
 	</view>
 </template>
@@ -37,6 +42,20 @@
 			itemClick(index) {
 				this.currentIndex = index;
 				this.$emit("titleClick", index);
+			},
+			share() {
+				uni.share({
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 1,
+					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+					success: function(res) {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: function(err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+				});
 			}
 		}
 	};

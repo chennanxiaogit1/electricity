@@ -58,7 +58,7 @@
 				},
 				type: "pop",
 				tabOffsetTop: 0,
-				isStick: false,
+				isStick: false
 			};
 		},
 		components: {
@@ -70,7 +70,7 @@
 			FeatureView,
 			TabBarControl
 		},
-		async onShow() {
+		onShow() {
 			// 请求数据
 			this.getHomeMultidata();
 			// 商品数据
@@ -79,16 +79,24 @@
 			this.getHomeGoods("sell");
 		},
 		methods: {
-			async getHomeMultidata() {
-				const res = await request({ url: "/home/multidata" });
-				this.banner = res.data.banner.list;
-				this.recommends = res.data.recommend.list;
+			getHomeMultidata() {
+				request({ url: "/home/multidata" })
+					.then(res => {
+						this.banner = res.data.banner.list;
+						this.recommends = res.data.recommend.list;
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			},
-			async getHomeGoods(type) {
+			getHomeGoods(type) {
 				let page = this.goods[type].page + 1;
-				const res = await request({ url: "/home/data", data: { type, page } });
-				this.goods[type].list = [...this.goods[type].list, ...res.data.list];
-				this.goods[type].page++;
+				request({ url: "/home/data", data: { type, page } }).then(res => {
+					this.goods[type].list = [...this.goods[type].list, ...res.data.list];
+					this.goods[type].page++;
+				}).catch(err => {
+					console.log(err);
+				});
 			},
 
 			showGoods() {
